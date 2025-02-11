@@ -677,6 +677,14 @@ section {
   background: rgba(255, 255, 255, 0.2);
   margin: 4px 10px;
 }
+.get-quote h2::before {
+  content: "";
+  width: 120px;
+  height: 1px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 4px 10px;
+}
 
 .section-title p {
   margin: 0;
@@ -737,13 +745,39 @@ section {
   .breadcrumbs ol li {
     display: inline-block;
   }
+  .quote-btn{
+    text-align: center;
+  }
+  .quote-btn button[type="submit"]{
+    width: auto !important;
+    border-radius: 50px !important;
+  }
+  .quote-form{
+    padding: 0 !important;
+  }
+  .section-title h2::after {
+    content: "";
+    width: 35px;
+    height: 1px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 4px 10px;
+  }
+  .get-quote h2::before {
+    content: "";
+    width: 35px;
+    height: 1px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 4px 10px;
+  }
 }
 
 /*--------------------------------------------------------------
 # About
 --------------------------------------------------------------*/
 .about {
-  background: url("../img/about-bg.jpg") center center;
+  background: url("../img/about-bg-2.jpg") center center;
   background-size: cover;
   position: relative;
   padding: 80px 0;
@@ -1045,7 +1079,7 @@ section {
 # Events
 --------------------------------------------------------------*/
 .events {
-  background: url(../img/events-bg.jpg) center center no-repeat;
+  background: url(../img/events-bg-1.jpg) center center no-repeat;
   background-size: cover;
   position: relative;
 }
@@ -1099,6 +1133,9 @@ section {
 .events .event-item .price span {
   border-bottom: 2px solid #cda45e;
 }
+.events .event-item .price span a{
+  color: #fff;
+}
 
 .events .event-item ul {
   list-style: none;
@@ -1138,6 +1175,10 @@ section {
 /*--------------------------------------------------------------
 # Book A Table
 --------------------------------------------------------------*/
+.quote-form{
+  padding: 0 185px;
+}
+
 .book-a-table .php-email-form {
   width: 100%;
 }
@@ -1234,7 +1275,12 @@ section {
   padding: 10px 35px;
   color: #fff;
   transition: 0.4s;
+  /* width: 100%; */
   border-radius: 50px;
+}
+.quote-btn button[type="submit"] {
+  width: 100%;
+  border-radius: 0;
 }
 
 .book-a-table .php-email-form button[type="submit"]:hover {
