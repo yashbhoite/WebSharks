@@ -1773,3 +1773,9 @@ section {
   font-size: 13px;
   color: #fff;
 }
+
+@media screen and (max-width: 426px) {
+  .processimg{
+    height: 250px !important;
+  }
+}
