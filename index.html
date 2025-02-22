@@ -395,29 +395,91 @@
       <p class="text-center">Grow With Us Now</p>
     </div>
 
-    <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form quote-form" data-aos="fade-up"
-      data-aos-delay="100">
+    <form id="quoteForm" action="https://formsubmit.co/info@thewebsharks.in" method="POST" class="php-email-form quote-form" data-aos="fade-up" data-aos-delay="100">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_subject" value="New Quote Request!">
+      <input type="hidden" name="_template" value="table">
+  
       <div class="row">
-        <div class="col-lg-4 col-md-6 form-group">
-          <input type="text" name="name" class="form-control" id="name" placeholder="Your Website URL" data-rule="minlen:4"
-            data-msg="Please enter at least 4 chars">
-          <div class="validate"></div>
-        </div>
-        <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-          <input type="email" class="form-control" name="email" id="email" placeholder="Your Email"
-            data-rule="email" data-msg="Please enter a valid email">
-          <div class="validate"></div>
-        </div>
-        <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-          <div class="quote-btn"><button type="submit">Get Quote Now</button></div>
-        </div>
-      <!-- <div class="mb-3">
-        <div class="loading">Loading</div>
-        <div class="error-message"></div>
-        <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your
-          reservation. Thank you!</div> -->
+          <div class="col-lg-4 col-md-6 form-group">
+              <input type="text" name="name" class="form-control" id="website" placeholder="Your Website URL" required>
+              <small id="urlError" style="color: red; display: none;">Invalid URL. Please enter a valid website link.</small>
+          </div>
+          <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
+              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+          </div>
+          <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
+              <div class="quote-btn"><button type="submit" id="submitBtn">Get Quote Now</button></div>
+          </div>
       </div>
-    </form>
+  </form>
+  
+  <!-- Status Popup -->
+  <div id="statusPopup" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#4CAF50; color:#fff; padding:20px; border-radius:5px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+      Submitting request...
+  </div>
+  
+  <script>
+    document.getElementById("quoteForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+  
+        let websiteInput = document.getElementById("website");
+        let websiteURL = websiteInput.value.trim();
+        let urlError = document.getElementById("urlError");
+  
+        // URL Validation Regex
+        let urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(\/[\w-]*)*$/;
+  
+        if (!urlPattern.test(websiteURL)) {
+            urlError.style.display = "block";
+            return; // Stop form submission
+        } else {
+            urlError.style.display = "none";
+        }
+  
+        let statusPopup = document.getElementById("statusPopup");
+        let submitBtn = document.getElementById("submitBtn");
+  
+        // Show "Submitting request..." instantly
+        statusPopup.innerHTML = "Submitting request...";
+        statusPopup.style.display = "block";
+  
+        submitBtn.disabled = true; // Disable button to prevent multiple clicks
+  
+        let formData = new FormData(this); // Capture form data
+  
+        fetch(this.action, {
+            method: this.method,
+            body: formData
+        }).then(response => {
+            if (response.ok) {
+                statusPopup.innerHTML = "Form submitted successfully!"; // Update message
+                document.getElementById("quoteForm").reset(); // Reset form
+                setTimeout(() => {
+                    statusPopup.style.display = "none"; // Hide popup after 3 sec
+                    submitBtn.disabled = false; // Re-enable button
+                }, 3000);
+            } else {
+                statusPopup.innerHTML = "Error submitting form. Please try again.";
+                setTimeout(() => statusPopup.style.display = "none", 3000);
+            }
+        }).catch(error => {
+            statusPopup.innerHTML = "Something went wrong.";
+            setTimeout(() => statusPopup.style.display = "none", 3000);
+        });
+    });
+  </script>
+  
+  
+  
+    
+    <!-- Message Response -->
+    <div class="mb-3">
+      <div class="loading" style="display: none;">Loading...</div>
+      <div class="error-message" style="display: none;"></div>
+      <div class="sent-message" style="display: none;">Your request was sent successfully!</div>
+    </div>
+    
 
   </div>
 </section><!-- End Book A Table Section -->
@@ -803,31 +865,93 @@
     
               <div class="col-lg-8 mt-5 mt-lg-0">
     
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                <form id="contactForm" action="https://formsubmit.co/info@thewebsharks.in" method="POST" class="php-email-form">
+                  <input type="hidden" name="_captcha" value="false">
+                  <input type="hidden" name="_subject" value="New Contact Message!">
+              
                   <div class="row">
-                    <div class="col-md-4 form-group">
-                      <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
-                    </div>
-                    <div class="col-md-4 form-group mt-3 mt-md-0">
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
-                    </div>
-                    <div class="col-md-4 form-group mt-3 mt-md-0">
-                      <input type="phone" class="form-control" name="phone" id="phone" placeholder="Your Phone" required>
-                    </div>
+                      <div class="col-md-4 form-group">
+                          <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                      </div>
+                      <div class="col-md-4 form-group mt-3 mt-md-0">
+                          <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                      </div>
+                      <div class="col-md-4 form-group mt-3 mt-md-0">
+                          <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" required>
+                          <small id="phoneError" style="color: red; display: none;">Invalid phone number. Enter 10 digits.</small>
+                      </div>
                   </div>
                   <div class="form-group mt-3">
-                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
+                      <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" required>
                   </div>
                   <div class="form-group mt-3">
-                    <textarea class="form-control" name="message" rows="8" placeholder="Message" required></textarea>
+                      <textarea class="form-control" name="message" rows="8" placeholder="Message" required></textarea>
                   </div>
-                  <!-- <div class="my-3">
-                    <div class="loading">Loading</div>
-                    <div class="error-message"></div>
-                    <div class="sent-message">Your message has been sent. Thank you!</div>
-                  </div> -->
-                  <div class="text-center mt-2"><button type="submit">Send Message</button></div>
-                </form>
+              
+                  <div class="text-center mt-2"><button type="submit" id="submitBtn">Send Message</button></div>
+              </form>
+              
+              <!-- Status Popup -->
+              <div id="statusPopupcontact" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#4CAF50; color:#fff; padding:20px; border-radius:5px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+                  Sending message...
+              </div>
+              
+              <script>
+              document.getElementById("contactForm").addEventListener("submit", function(event) {
+                  event.preventDefault(); // Prevent default form submission
+              
+                  let phoneInput = document.getElementById("phone");
+                  let phoneError = document.getElementById("phoneError");
+                  let phoneNumber = phoneInput.value.trim();
+              
+                  // Phone number validation (must be 10 digits)
+                  let phonePattern = /^[0-9]{10}$/;
+              
+                  if (!phonePattern.test(phoneNumber)) {
+                      phoneError.style.display = "block";
+                      return; // Stop form submission
+                  } else {
+                      phoneError.style.display = "none";
+                  }
+              
+                  let statusPopupcontact = document.getElementById("statusPopupcontact");
+                  let submitBtn = document.getElementById("submitBtn");
+              
+                  // Show "Sending message..." instantly
+                  statusPopupcontact.innerHTML = "Sending message...";
+                  statusPopupcontact.style.background = "#4CAF50"; // Orange for sending state
+                  statusPopupcontact.style.display = "block";
+              
+                  submitBtn.disabled = true; // Disable button to prevent multiple clicks
+              
+                  let formData = new FormData(this);
+              
+                  fetch(this.action, {
+                      method: this.method,
+                      body: formData
+                  }).then(response => {
+                      if (response.ok) {
+                          statusPopupcontact.innerHTML = "Message sent successfully!";
+                          statusPopupcontact.style.background = "#4CAF50"; // Green for success
+                          document.getElementById("contactForm").reset();
+                          setTimeout(() => {
+                              statusPopupcontact.style.display = "none";
+                              submitBtn.disabled = false;
+                          }, 3000);
+                      } else {
+                          statusPopupcontact.innerHTML = "Error sending message. Please try again.";
+                          statusPopupcontact.style.background = "#FF0000"; // Red for error
+                          setTimeout(() => statusPopupcontact.style.display = "none", 3000);
+                      }
+                  }).catch(error => {
+                      statusPopupcontact.innerHTML = "Something went wrong.";
+                      statusPopupcontact.style.background = "#FF0000"; // Red for error
+                      setTimeout(() => statusPopupcontact.style.display = "none", 3000);
+                  });
+              });
+              </script>
+              
+              
     
               </div>
     
